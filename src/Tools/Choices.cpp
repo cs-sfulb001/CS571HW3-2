@@ -1,5 +1,6 @@
 #include <string>
 #include "Choices.h"
+#include <climits>
 
 bool choiceYN(std::string question)
 {

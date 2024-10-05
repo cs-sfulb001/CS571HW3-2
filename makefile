@@ -24,7 +24,7 @@ endif
 
 #Compilier to be used
 CXX := g++
-CXXFlags:=-pthread -unistd
+#CXXFlags:=-pthread -unistd
 
 #Targets to be compilied
 TARGETS:=$(SRC_DIR)
@@ -43,7 +43,7 @@ $(TARGETS):$(OBJECTS)
 	$(CXX) $^ -o $(ProjectName).exe
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFlags) $< -c $(INCLUDEFLAGS) -o $@
+	$(CXX) $< -c $(INCLUDEFLAGS) -o $@
 
 RMJunk: #Removes the extra information left behind after compiling
 	$(RM) $(shell $(Junk))
