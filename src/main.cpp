@@ -16,13 +16,15 @@ void Process(int process, bool (&flags)[2], int &turn){
     }
     for(int i=0;i<3;i++){
         std::string output;
-        while(min+rand()%max!=50);//Chance to move to Critical section
+        while(min+rand()%max!=50)//Chance to move to Critical section
+            std::this_thread::sleep_for(std::chrono::nanoseconds(10));
         //Request to go to Critical section
         turn=otherP;
         flags[process]=true;
         output="Thread "+std::to_string(process)+" has requested the resource";
         std::cout<<output<<std::endl;
-        while(flags[otherP]&&turn==otherP);
+        while(flags[otherP]&&turn==otherP)
+            std::this_thread::sleep_for(std::chrono::nanoseconds(10));
         //Enter Critical section
         output="Thread "+std::to_string(process)+" has the resource";
         std::cout<<output<<std::endl;
@@ -38,10 +40,10 @@ main(){
     int turn;
     std::thread thread1(Process, 0, std::ref(flags), std::ref(turn));
     std::thread thread2(Process, 1, std::ref(flags), std::ref(turn));
-    std::cout<<"Threads started?"<<std::endl;
     while(thread1.joinable()||thread2.joinable()){
         if(!flags[turn])
             turn = rand()%1;
+        std::this_thread::sleep_for(std::chrono::nanoseconds(10));
     }
 }
 
